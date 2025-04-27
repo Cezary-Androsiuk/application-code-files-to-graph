@@ -23,6 +23,9 @@ void Program::run()
     // }
 
     this->createStructureForGraph();
+
+    this->startGraphviz();
+
 }
 
 void Program::readDirectory()
@@ -82,8 +85,8 @@ void Program::findRelationsBetweenFiles()
 {
     int filesToProcess = m_files.size();
     int fileIndexProcessing = 0;
-    printf("looking for realtions... %3d/%3d  ", fileIndexProcessing++, filesToProcess);
-    fflush(stdout);
+    // printf("looking for realtions... %3d/%3d  ", fileIndexProcessing++, filesToProcess);
+    // fflush(stdout);
     for(const auto &fileWithContent : m_files)
     {
         for(const auto &fileWithName : m_files)
@@ -97,10 +100,12 @@ void Program::findRelationsBetweenFiles()
                 fileWithContent->addIncludeFile(fileWithName);
             }
         }
-        printf("\r""looking for realtions... %3d/%3d  ", fileIndexProcessing++, filesToProcess);
-        fflush(stdout);
+        // printf("\r""looking for realtions... %3d/%3d  ", fileIndexProcessing++, filesToProcess);
+        // fflush(stdout);
     }
-    printf("\n");
+
+    I("created relations between files");
+    // printf("\n");
 }
 
 void Program::createStructureForGraph()
@@ -137,6 +142,60 @@ void Program::createStructureForGraph()
     outFile << "}";
 
     outFile.close();
+}
+
+void Program::startGraphviz()
+{
+    std::string graphvizDotLocation = m_startupJson->getGraphvizDotLocation();
+    std::string outImagePath = m_startupJson->getOutputImagePath();
+
+
+
+    auto makePathSafe = [](std::string path) -> std::string {
+        if (path.find(' ') != std::string::npos) {
+            return "\"" + path + "\"";
+        }
+        return path;
+    };
+
+    auto makeWindowsLikePath = [&makePathSafe](std::string path) -> std::string {
+        /// change normal slash '/' to stupid windows slash '\'
+        for (char& c : path) {
+            if (c == '/') c = '\\';
+        }
+
+        return makePathSafe(path);
+    };
+
+#ifdef _WIN32
+    std::string command =
+        makeWindowsLikePath(graphvizDotLocation) +
+        " -Tpng " +
+        makeWindowsLikePath(graphSourceFile) +
+        " -o " +
+        makeWindowsLikePath(outImagePath);
+
+// #elif __linux__
+#else
+    std::string command =
+        makePathSafe(graphvizDotLocation) +
+        " -Tpng " +
+        makePathSafe(graphSourceFile) +
+        " -o " +
+        makePathSafe(outImagePath);
+#endif
+
+
+    if(std::system(command.c_str()))
+    {
+        E("failed while starting graphviz with command: \"%s\"", command.c_str());
+    }
+    else
+    {
+        I("graphviz executed successfully");
+    }
+
+    fs::remove(graphSourceFile);
 }
 
 bool Program::hasAcceptedExtension(const fs::path &path) const

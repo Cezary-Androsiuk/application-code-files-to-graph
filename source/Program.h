@@ -26,6 +26,7 @@ private:
     void readDirectory();
     void findRelationsBetweenFiles();
     void createStructureForGraph();
+    void startGraphviz();
 
     bool hasAcceptedExtension(const fs::path &path) const;
     bool notHasIgnoresExtension(const fs::path &path) const;

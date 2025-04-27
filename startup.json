@@ -1,9 +1,9 @@
 {
-    "directory path2": "G:/Studia/Studia-Informatyka_2/Semestr_2/tm-techniki_multimedialne/lab/_projekt/shooter-game",
-    "directory path": "D:/QtCreator/0_projects/PetanqueTeam/graph",
-    "output image path": "",
+    "directory path": "D:/QtCreator/0_small_projects/ApplicationCodeFilesToGraph",
+    "output image path": "D:/QtCreator/0_small_projects/ApplicationCodeFilesToGraph/ApplicationCodeFilesToGraph.png",
     "use accepted extesions": true,
     "accepted extesions": [
+        ".cpp",
         ".hpp",
         ".h"
     ],
