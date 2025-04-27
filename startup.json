@@ -1,9 +1,9 @@
 {
-    "directory path": "G:/Studia/Studia-Informatyka_2/Semestr_2/tm-techniki_multimedialne/lab/_projekt/shooter-game",
-    "output path": "",
+    "directory path2": "G:/Studia/Studia-Informatyka_2/Semestr_2/tm-techniki_multimedialne/lab/_projekt/shooter-game",
+    "directory path": "D:/QtCreator/0_projects/PetanqueTeam/graph",
+    "output image path": "",
     "use accepted extesions": true,
     "accepted extesions": [
-        ".cpp",
         ".hpp",
         ".h"
     ],
@@ -12,5 +12,6 @@
 
     ],
     "display all readed files": false,
-    "display all ignored extensions": false
+    "display all ignored extensions": false,
+    "graphviz dot.exe location" : "./Graphviz/Graphviz-12.2.1-win64/bin/dot.exe"
 }

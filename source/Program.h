@@ -13,6 +13,8 @@
 
 namespace fs = std::filesystem;
 
+extern const char *graphSourceFile;
+
 class Program
 {
 public:
@@ -23,6 +25,7 @@ public:
 private:
     void readDirectory();
     void findRelationsBetweenFiles();
+    void createStructureForGraph();
 
     bool hasAcceptedExtension(const fs::path &path) const;
     bool notHasIgnoresExtension(const fs::path &path) const;

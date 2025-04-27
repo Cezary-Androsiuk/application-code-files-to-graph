@@ -1,5 +1,7 @@
 #include "Program.h"
 
+const char *graphSourceFile = "./graph_source.dot";
+
 Program::Program()
     : m_startupJson( ReadStartupJson::getInstance() )
 {
@@ -14,11 +16,13 @@ void Program::run()
 
     this->findRelationsBetweenFiles();
 
-    for(const auto &file : m_files)
-    {
-        file->print();
-        printf("\n");
-    }
+    // for(const auto &file : m_files)
+    // {
+    //     file->print();
+    //     printf("\n");
+    // }
+
+    this->createStructureForGraph();
 }
 
 void Program::readDirectory()
@@ -97,6 +101,42 @@ void Program::findRelationsBetweenFiles()
         fflush(stdout);
     }
     printf("\n");
+}
+
+void Program::createStructureForGraph()
+{
+    std::ofstream outFile(graphSourceFile);
+    if(!outFile.is_open())
+    {
+        E("failed oppening file '%s' to save structure for graph\n", graphSourceFile);
+        return;
+    }
+
+    outFile << "digraph G {\n";
+
+    for(const auto &file : m_files)
+    {
+        const std::string fileName = file->getFileName();
+        for(const auto &includedFileWeak : file->getIncludedFiles())
+        {
+            if(includedFileWeak.expired())
+            {
+                W("can't access includedFile in '%s' file", fileName.c_str());
+                continue;
+            }
+
+            std::shared_ptr<File> includedFile(includedFileWeak);
+
+            outFile << "\""
+                    << includedFile->getFileName()
+                    << "\" -> \""
+                    << fileName
+                    << "\"" << ";\n";
+        }
+    }
+    outFile << "}";
+
+    outFile.close();
 }
 
 bool Program::hasAcceptedExtension(const fs::path &path) const

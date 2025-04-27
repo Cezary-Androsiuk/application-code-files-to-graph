@@ -21,10 +21,8 @@ class ReadStartupJson
 public:
     static ReadStartupJson *getInstance();
 
-
     const std::string &getDirectoryPath() const;
-
-    const std::string &getOutputPath() const;
+    const std::string &getOutputImagePath() const;
 
     bool getUseAcceptedExtensions() const;
     const std::vector<std::string> &getAcceptedExtensions() const;
@@ -35,15 +33,23 @@ public:
     bool getDisplayAllReadedFiles() const;
     bool getDisplayAllIgnoredExtensions() const;
 
+    const std::string getGraphvizDotLocation() const;
+
 private:
     std::string m_directoryPath;
-    std::string m_outputPath;
+    std::string m_outputImagePath;
+
     bool m_useAcceptedExtension;
     std::vector<std::string> m_acceptedExtensions;
+
     bool m_useIgnoredExtensions;
     std::vector<std::string> m_ignoredExtensions;
+
     bool m_displayAllReadedFiles;
     bool m_displayAllIgnoredExtensions;
+
+    std::string m_graphvizDotLocation;
+
 };
 
 #endif // READSTARTUPJSON_H

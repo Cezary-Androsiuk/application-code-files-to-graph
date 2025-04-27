@@ -9,8 +9,7 @@ const char *startupJsonFile = "./startup.json";
 void ReadStartupJson::readVariables(const json &jvalue)
 {
     m_directoryPath = readRawValue(jvalue, "directory path").get<std::string>();
-
-    m_outputPath = readRawValue(jvalue, "output path").get<std::string>();
+    m_outputImagePath = readRawValue(jvalue, "output image path").get<std::string>();
 
     m_useAcceptedExtension = readRawValue(jvalue, "use accepted extesions").get<bool>();
     m_acceptedExtensions = readRawValue(jvalue, "accepted extesions").get<std::vector<std::string>>();
@@ -20,6 +19,8 @@ void ReadStartupJson::readVariables(const json &jvalue)
 
     m_displayAllReadedFiles = readRawValue(jvalue , "display all readed files").get<bool>();
     m_displayAllIgnoredExtensions = readRawValue(jvalue, "display all ignored extensions").get<bool>();
+
+    m_graphvizDotLocation = readRawValue(jvalue, "graphviz dot.exe location").get<std::string>();
 
     I("all keys readed correctly");
 }
@@ -85,9 +86,9 @@ const std::string &ReadStartupJson::getDirectoryPath() const
     return m_directoryPath;
 }
 
-const std::string &ReadStartupJson::getOutputPath() const
+const std::string &ReadStartupJson::getOutputImagePath() const
 {
-    return m_outputPath;
+    return m_outputImagePath;
 }
 
 bool ReadStartupJson::getUseAcceptedExtensions() const
@@ -118,4 +119,9 @@ bool ReadStartupJson::getDisplayAllReadedFiles() const
 bool ReadStartupJson::getDisplayAllIgnoredExtensions() const
 {
     return m_displayAllIgnoredExtensions;
+}
+
+const std::string ReadStartupJson::getGraphvizDotLocation() const
+{
+    return m_graphvizDotLocation;
 }

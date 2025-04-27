@@ -22,6 +22,7 @@ public:
     const fs::path &getFilePath() const;
     std::string getFilePathRelative() const;
     std::string getFileName() const;
+    const std::vector<std::weak_ptr<File>> &getIncludedFiles() const;
 
 private:
     void readFileContent();

@@ -24,15 +24,19 @@ add_executable(
     source/Program.h source/Program.cpp
 )
 
-# file(GLOB RESOURCE_FILES_LIST "${CMAKE_SOURCE_DIR}/resources/*")
-# add_custom_target(resources_copy ALL
-#     COMMAND ${CMAKE_COMMAND} -E copy_directory
-#         ${CMAKE_SOURCE_DIR}/resources
-#         ${CMAKE_BINARY_DIR}/resources
-#     DEPENDS ${RESOURCE_FILES_LIST}
-#     COMMENT "Copying resources to build directory"
-# )
-# add_dependencies(${PROJECT_NAME} resources_copy)
+
+
+file(GLOB GRAPHVIZ_FILES_LIST "${CMAKE_SOURCE_DIR}/Graphviz/*")
+add_custom_target(graphviz_copy ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/Graphviz
+        ${CMAKE_BINARY_DIR}/Graphviz
+    DEPENDS ${GRAPHVIZ_FILES_LIST}
+    COMMENT "Copying Graphviz to build directory"
+)
+add_dependencies(${PROJECT_NAME} graphviz_copy)
+
+
 
 set(SOURCE_JSON "${CMAKE_SOURCE_DIR}/startup.json")
 set(TARGET_JSON "${CMAKE_BINARY_DIR}/startup.json")
@@ -44,6 +48,8 @@ add_custom_target(copy_startup_json ALL
     COMMENT "Copying startup.json to build directory"
 )
 add_dependencies(${PROJECT_NAME} copy_startup_json)
+
+
 
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}

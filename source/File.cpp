@@ -38,13 +38,17 @@ void File::print() const
     // printf("file: %s\n" "name: %s\n",
     //        m_filePath.string().c_str(),
     //        m_filePath.filename().string().c_str());
-    printf("%s\n", this->getFilePathRelative().c_str());
+    const std::string fileName = this->getFilePathRelative();
+    printf("%s\n", fileName.c_str());
     printf("lines count: %lld\n", m_fileContent.size());
     printf("included files:\n");
     for(const auto &includedFileWeak : m_includedFiles)
     {
         if(includedFileWeak.expired())
+        {
+            W("can't access includedFile in '%s' file", fileName.c_str());
             continue;
+        }
 
         std::shared_ptr<File> includedFile(includedFileWeak);
 
@@ -68,9 +72,19 @@ std::string File::getFileName() const
     return m_filePath.filename().string();
 }
 
+const std::vector<std::weak_ptr<File> > &File::getIncludedFiles() const
+{
+    return m_includedFiles;
+}
+
 void File::readFileContent()
 {
     std::ifstream file(m_filePath);
+    if(!file.is_open())
+    {
+        W("failed oppening file '%s' to read content\n", m_filePath.string().c_str());
+        return;
+    }
 
     std::string line;
     while(std::getline(file, line))
@@ -84,6 +98,11 @@ void File::readFileContent()
 size_t File::getRequiredLinesCount() const
 {
     std::ifstream ifs(m_filePath);
+    if(!ifs.is_open())
+    {
+        W("failed oppening file '%s' to read lines count\n", m_filePath.string().c_str());
+        return 64;
+    }
     size_t count = std::count(
         std::istreambuf_iterator<char>(ifs),
         std::istreambuf_iterator<char>(),
