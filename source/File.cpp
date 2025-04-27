@@ -1,0 +1,105 @@
+#include "File.h"
+
+#include <fstream>
+
+File::File(const fs::path &rootDirPath, const fs::path &filePath)
+    : m_rootDirPath{rootDirPath}
+    , m_filePath{filePath}
+{
+    const size_t requiredLinesCount = this->getRequiredLinesCount();
+
+    // I("requiredLinesCount %llu", requiredLinesCount);
+    m_fileContent.reserve(requiredLinesCount);
+    m_includedFiles.reserve(32); /// i don't see how any file could have more included than that
+
+    this->readFileContent();
+}
+
+bool File::fileContentContains(std::string phrase) const
+{
+    for(const auto &line : m_fileContent)
+    {
+        size_t pos = line.find(phrase);
+        if(pos != std::string::npos)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void File::addIncludeFile(const std::shared_ptr<File> &includedFile)
+{
+    m_includedFiles.push_back(includedFile);
+}
+
+void File::print() const
+{
+    // printf("file: %s\n" "name: %s\n",
+    //        m_filePath.string().c_str(),
+    //        m_filePath.filename().string().c_str());
+    printf("%s\n", this->getFilePathRelative().c_str());
+    printf("lines count: %lld\n", m_fileContent.size());
+    printf("included files:\n");
+    for(const auto &includedFileWeak : m_includedFiles)
+    {
+        if(includedFileWeak.expired())
+            continue;
+
+        std::shared_ptr<File> includedFile(includedFileWeak);
+
+        printf("\t""%s\n", includedFile->getFilePathRelative().c_str());
+    }
+
+}
+
+const fs::path &File::getFilePath() const
+{
+    return m_filePath;
+}
+
+std::string File::getFilePathRelative() const
+{
+    return m_filePath.lexically_relative(m_rootDirPath).string();
+}
+
+std::string File::getFileName() const
+{
+    return m_filePath.filename().string();
+}
+
+void File::readFileContent()
+{
+    std::ifstream file(m_filePath);
+
+    std::string line;
+    while(std::getline(file, line))
+    {
+        m_fileContent.push_back(line);
+    }
+
+    file.close();
+}
+
+size_t File::getRequiredLinesCount() const
+{
+    std::ifstream ifs(m_filePath);
+    size_t count = std::count(
+        std::istreambuf_iterator<char>(ifs),
+        std::istreambuf_iterator<char>(),
+        '\n'
+        )+1;
+
+    ifs.close();
+
+    size_t i=1;
+    while(i < count)
+    {
+        if(i > 0x1'000'000)
+        {
+            return count;
+        }
+        i *= 2;
+    }
+    return i;
+}

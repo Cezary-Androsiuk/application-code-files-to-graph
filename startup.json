@@ -1,0 +1,16 @@
+{
+    "directory path": "G:/Studia/Studia-Informatyka_2/Semestr_2/tm-techniki_multimedialne/lab/_projekt/shooter-game",
+    "output path": "",
+    "use accepted extesions": true,
+    "accepted extesions": [
+        ".cpp",
+        ".hpp",
+        ".h"
+    ],
+    "use ignored extesions": false,
+    "ignored extesions": [
+
+    ],
+    "display all readed files": false,
+    "display all ignored extensions": false
+}
