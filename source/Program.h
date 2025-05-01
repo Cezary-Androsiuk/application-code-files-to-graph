@@ -24,6 +24,14 @@ public:
 
 private:
     void readDirectory();
+    void readDirectoryRecursive(
+        const fs::path &directory,
+        std::map<std::string, int> &skipped,
+        std::vector<fs::path> &accepted);
+    void processFileFromDirectory(
+        const fs::path &file,
+        std::map<std::string, int> &skipped,
+        std::vector<fs::path> &accepted);
     void findRelationsBetweenFiles();
     void createStructureForGraph();
     void startGraphviz();

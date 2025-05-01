@@ -14,6 +14,10 @@ void Program::run()
 
     this->readDirectory();
 
+    I("end");
+
+    return;
+
     this->findRelationsBetweenFiles();
 
     // for(const auto &file : m_files)
@@ -30,61 +34,105 @@ void Program::run()
 
 void Program::readDirectory()
 {
-    std::map<std::string, int> skippedExtensions;
+    std::map<std::string, int> skipped;
+    std::vector<fs::path> accepted;
 
-    for(const auto &file : fs::recursive_directory_iterator(m_directoryPath))
-    {
-        // fs::path relativeFile = fs::relative(file.path(), m_directoryPath);
-        if(file.is_directory())
-            continue;
-        if(!file.is_regular_file())
-            continue;
-
-        const fs::path &filePath = file.path();
-
-        if(this->hasAcceptedExtension(filePath) && this->notHasIgnoresExtension(filePath))
-        {
-            static bool displayAllReadedFiles = m_startupJson->getDisplayAllReadedFiles();
-            std::string relativeFilePath = file.path().lexically_relative(m_directoryPath)
-                                               .string();
-            if(displayAllReadedFiles)
-                D("%s", relativeFilePath.c_str());
-
-            m_files.push_back(
-                std::make_shared<File>(
-                    m_directoryPath,
-                    file.path())
-                );
-
-        }
-        else
-        {
-            const std::string &extension = filePath.extension().string();
-            if(auto search = skippedExtensions.find(extension); search != skippedExtensions.end())
-            {
-                search->second++;
-            }
-            else
-            {
-                skippedExtensions[extension] = 1;
-            }
-        }
-    }
+    readDirectoryRecursive(m_directoryPath, skipped, accepted);
 
     if(m_startupJson->getDisplayAllIgnoredExtensions())
     {
-        I("Skipped extensions:");
-        for(const auto &[skippedExtension, count] : skippedExtensions)
+        R("Skipped extensions:\n");
+        for(const auto &[skippedExtension, count] : skipped)
         {
-            I("\"%s\" - %d", skippedExtension.c_str(), count);
+            R("\"%s\" - %d\n", skippedExtension.c_str(), count);
+        }
+    }
+
+    if(m_startupJson->getDisplayAllReadedFiles())
+    {
+        R("Accepted files:\n");
+        for(const auto &file : accepted)
+        {
+            R("%s\n", file.relative_path().string().c_str());
+        }
+    }
+}
+
+void Program::readDirectoryRecursive(
+    const fs::path &directory,
+    std::map<std::string, int> &skipped,
+    std::vector<fs::path> &accepted)
+{
+    std::vector<fs::path> innerDirectories;
+
+    for(const auto &file : fs::directory_iterator(directory))
+    {
+        if(file.is_directory())
+        {
+            innerDirectories.push_back(file.path());
+            continue;
+        }
+        if(!file.is_regular_file())
+            continue;
+
+        this->processFileFromDirectory(file, skipped, accepted);
+    }
+
+    /// read inned directories
+    for(const auto &directory : innerDirectories)
+    {
+        this->readDirectoryRecursive(directory, skipped, accepted);
+    }
+}
+
+void Program::processFileFromDirectory(
+    const fs::path &file,
+    std::map<std::string, int> &skipped,
+    std::vector<fs::path> &accepted)
+{
+    bool goodExtension = this->hasAcceptedExtension(file) &&
+                         this->notHasIgnoresExtension(file);
+
+    bool goodFileName = true;
+
+    if(goodExtension && goodFileName)
+    {
+        accepted.push_back(file.lexically_relative(m_directoryPath));
+
+        m_files.push_back( std::make_shared<File>(m_directoryPath, file) );
+    }
+    else
+    {
+        std::string skippedData;
+
+        /// if filename is not an "unwanted" one, then it must be an extension at this point
+        /// and if both are "unwanted" imo filename has higher privileges
+        if(!goodFileName)
+        {
+            /// file name is marked as "unwanted"
+            skippedData = file.string();
+        }
+        else // if(!goodExtension)
+        {
+            skippedData = "*" + file.extension().string();
+        }
+
+        /// add to skipped data list
+        if(auto search = skipped.find(skippedData); search != skipped.end())
+        {
+            search->second++;
+        }
+        else
+        {
+            skipped[skippedData] = 1;
         }
     }
 }
 
 void Program::findRelationsBetweenFiles()
 {
-    int filesToProcess = m_files.size();
-    int fileIndexProcessing = 0;
+    // int filesToProcess = m_files.size();
+    // int fileIndexProcessing = 0;
     // printf("looking for realtions... %3d/%3d  ", fileIndexProcessing++, filesToProcess);
     // fflush(stdout);
     for(const auto &fileWithContent : m_files)
@@ -200,8 +248,8 @@ void Program::startGraphviz()
 
 bool Program::hasAcceptedExtension(const fs::path &path) const
 {
-    static bool useAcceptedExtension = m_startupJson->getUseAcceptedExtensions();
-    if(!useAcceptedExtension)
+    static bool useAcceptedExtensions = m_startupJson->getUseAcceptedExtensions();
+    if(!useAcceptedExtensions)
         return true;
 
     static const auto &acceptedExtensions = m_startupJson->getAcceptedExtensions();
@@ -228,8 +276,8 @@ bool Program::hasAcceptedExtension(const fs::path &path) const
 
 bool Program::notHasIgnoresExtension(const std::filesystem::__cxx11::path &path) const
 {
-    static bool useIgnoredExtension = m_startupJson->getUseIgnoredExtensions();
-    if(!useIgnoredExtension)
+    static bool useIgnoredExtensions = m_startupJson->getUseIgnoredExtensions();
+    if(!useIgnoredExtensions)
         return true;
 
 
@@ -244,13 +292,14 @@ bool Program::notHasIgnoresExtension(const std::filesystem::__cxx11::path &path)
         if(ignoredExtension[0] == '.')
         {
             if(extension == ignoredExtension)
-                return true;
+                return false;
         }
         else
         {
             if(extension == '.' + ignoredExtension)
-                return true;
+                return false;
         }
     }
-    return false;
+    return true;
 }
+
