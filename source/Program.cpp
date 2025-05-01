@@ -91,7 +91,7 @@ void Program::processFileFromDirectory(
     std::vector<fs::path> &accepted)
 {
     bool goodExtension = this->hasAcceptedExtension(file) &&
-                         this->notHasIgnoresExtension(file);
+                         this->notHasIgnoredExtension(file);
 
     bool goodFileName = true;
 
@@ -274,7 +274,7 @@ bool Program::hasAcceptedExtension(const fs::path &path) const
     return false;
 }
 
-bool Program::notHasIgnoresExtension(const std::filesystem::__cxx11::path &path) const
+bool Program::notHasIgnoredExtension(const std::filesystem::__cxx11::path &path) const
 {
     static bool useIgnoredExtensions = m_startupJson->getUseIgnoredExtensions();
     if(!useIgnoredExtensions)

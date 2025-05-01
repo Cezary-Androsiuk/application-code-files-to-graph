@@ -37,7 +37,7 @@ private:
     void startGraphviz();
 
     bool hasAcceptedExtension(const fs::path &path) const;
-    bool notHasIgnoresExtension(const fs::path &path) const;
+    bool notHasIgnoredExtension(const fs::path &path) const;
 
 private:
     const ReadStartupJson *const m_startupJson;
