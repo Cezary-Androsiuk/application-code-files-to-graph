@@ -14,10 +14,6 @@ void Program::run()
 
     this->readDirectory();
 
-    I("end");
-
-    return;
-
     this->findRelationsBetweenFiles();
 
     // for(const auto &file : m_files)
