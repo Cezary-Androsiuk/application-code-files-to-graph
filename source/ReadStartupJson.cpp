@@ -11,11 +11,19 @@ void ReadStartupJson::readVariables(const json &jvalue)
     m_directoryPath = readRawValue(jvalue, "directory path").get<std::string>();
     m_outputImagePath = readRawValue(jvalue, "output image path").get<std::string>();
 
-    m_useAcceptedExtension = readRawValue(jvalue, "use accepted extesions").get<bool>();
+
+    m_useAcceptedExtensions = readRawValue(jvalue, "use accepted extesions").get<bool>();
     m_acceptedExtensions = readRawValue(jvalue, "accepted extesions").get<std::vector<std::string>>();
 
     m_useIgnoredExtensions = readRawValue(jvalue, "use ignored extesions").get<bool>();
     m_ignoredExtensions = readRawValue(jvalue, "ignored extesions").get<std::vector<std::string>>();
+
+    m_useAcceptedFileNames = readRawValue(jvalue, "use accepted file names").get<bool>();
+    m_acceptedFileNames = readRawValue(jvalue, "accepted file names").get<std::vector<std::string>>();
+
+    m_useIgnoredFileNames = readRawValue(jvalue, "use ignored file names").get<bool>();
+    m_ignoredFileNames = readRawValue(jvalue, "ignored file names").get<std::vector<std::string>>();
+
 
     m_displayAllReadedFiles = readRawValue(jvalue , "display all readed files").get<bool>();
     m_displayAllIgnoredExtensions = readRawValue(jvalue, "display all ignored extensions").get<bool>();
@@ -93,7 +101,7 @@ const std::string &ReadStartupJson::getOutputImagePath() const
 
 bool ReadStartupJson::getUseAcceptedExtensions() const
 {
-    return m_useAcceptedExtension;
+    return m_useAcceptedExtensions;
 }
 
 const std::vector<std::string> &ReadStartupJson::getAcceptedExtensions() const
@@ -109,6 +117,26 @@ bool ReadStartupJson::getUseIgnoredExtensions() const
 const std::vector<std::string> &ReadStartupJson::getIngoredExtensions() const
 {
     return m_ignoredExtensions;
+}
+
+bool ReadStartupJson::getUseAcceptedFileNames() const
+{
+    return m_useAcceptedFileNames;
+}
+
+const std::vector<std::string> &ReadStartupJson::getAcceptedFileNames() const
+{
+    return m_acceptedFileNames;
+}
+
+bool ReadStartupJson::getUseIgnoredFileNames() const
+{
+    return m_useIgnoredFileNames;
+}
+
+const std::vector<std::string> &ReadStartupJson::getIngoredFileNames() const
+{
+    return m_ignoredFileNames;
 }
 
 bool ReadStartupJson::getDisplayAllReadedFiles() const

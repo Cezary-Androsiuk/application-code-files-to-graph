@@ -93,7 +93,8 @@ void Program::processFileFromDirectory(
     bool goodExtension = this->hasAcceptedExtension(file) &&
                          this->notHasIgnoredExtension(file);
 
-    bool goodFileName = true;
+    bool goodFileName = this->hasAcceptedFileName(file) &&
+                        this->notHasIgnoredFileName(file);
 
     if(goodExtension && goodFileName)
     {
@@ -110,7 +111,7 @@ void Program::processFileFromDirectory(
         if(!goodFileName)
         {
             /// file name is marked as "unwanted"
-            skippedData = file.string();
+            skippedData = file.lexically_relative(m_directoryPath).string();
         }
         else // if(!goodExtension)
         {
@@ -246,7 +247,7 @@ void Program::startGraphviz()
     fs::remove(graphSourceFile);
 }
 
-bool Program::hasAcceptedExtension(const fs::path &path) const
+bool Program::hasAcceptedExtension(const std::filesystem::__cxx11::path &path) const
 {
     static bool useAcceptedExtensions = m_startupJson->getUseAcceptedExtensions();
     if(!useAcceptedExtensions)
@@ -299,6 +300,47 @@ bool Program::notHasIgnoredExtension(const std::filesystem::__cxx11::path &path)
             if(extension == '.' + ignoredExtension)
                 return false;
         }
+    }
+    return true;
+}
+
+bool Program::hasAcceptedFileName(const std::filesystem::__cxx11::path &path) const
+{
+    static bool useAcceptedFileNames = m_startupJson->getUseAcceptedFileNames();
+    if(!useAcceptedFileNames)
+        return true;
+
+    static const auto &acceptedFileNames = m_startupJson->getAcceptedFileNames();
+    const std::string &fileName = path.filename().string();
+
+    for(const std::string &acceptedFileName : acceptedFileNames)
+    {
+        if(acceptedFileNames.empty())
+            continue;
+
+        if(fileName == acceptedFileName)
+            return true;
+    }
+    return false;
+}
+
+bool Program::notHasIgnoredFileName(const std::filesystem::__cxx11::path &path) const
+{
+    static bool useIgnoredFileNames = m_startupJson->getUseIgnoredFileNames();
+    if(!useIgnoredFileNames)
+        return true;
+
+
+    static const auto &ignoredFileNames = m_startupJson->getIngoredFileNames();
+    const std::string &fileName = path.filename().string();
+
+    for(const std::string &ignoredFileName : ignoredFileNames)
+    {
+        if(ignoredFileName.empty())
+            continue;
+
+        if(fileName == ignoredFileName)
+            return false;
     }
     return true;
 }

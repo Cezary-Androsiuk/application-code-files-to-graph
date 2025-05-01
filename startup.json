@@ -1,17 +1,28 @@
 {
-    "directory path": "D:/QtCreator/0_small_projects/ApplicationCodeFilesToGraph",
-    "output image path": "D:/QtCreator/0_small_projects/ApplicationCodeFilesToGraph/ApplicationCodeFilesToGraph.png",
+    "directory path": "D:/QtCreator/0_projects/PetanqueTeam/graph",
+    "output image path": "D:/QtCreator/0_projects/PetanqueTeam/graph/PetanqueTeam.png",
+
     "use accepted extesions": true,
     "accepted extesions": [
         ".cpp",
         ".hpp",
         ".h"
     ],
-    "use ignored extesions": false,
+    "use ignored extesions": true,
     "ignored extesions": [
+        ".cpp"
+    ],
+
+    "use accepted file names": false,
+    "accepted file names": [
 
     ],
-    "display all readed files": false,
-    "display all ignored extensions": false,
+    "use ignored file names": true,
+    "ignored file names": [
+        "Backend.h"
+    ],
+
+    "display all readed files": true,
+    "display all ignored extensions": true,
     "graphviz dot.exe location" : "./Graphviz/Graphviz-12.2.1-win64/bin/dot.exe"
 }

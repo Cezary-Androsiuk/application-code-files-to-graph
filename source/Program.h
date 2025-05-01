@@ -39,6 +39,9 @@ private:
     bool hasAcceptedExtension(const fs::path &path) const;
     bool notHasIgnoredExtension(const fs::path &path) const;
 
+    bool hasAcceptedFileName(const fs::path &path) const;
+    bool notHasIgnoredFileName(const fs::path &path) const;
+
 private:
     const ReadStartupJson *const m_startupJson;
 

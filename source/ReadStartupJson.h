@@ -24,11 +24,19 @@ public:
     const std::string &getDirectoryPath() const;
     const std::string &getOutputImagePath() const;
 
+
     bool getUseAcceptedExtensions() const;
     const std::vector<std::string> &getAcceptedExtensions() const;
 
     bool getUseIgnoredExtensions() const;
     const std::vector<std::string> &getIngoredExtensions() const;
+
+    bool getUseAcceptedFileNames() const;
+    const std::vector<std::string> &getAcceptedFileNames() const;
+
+    bool getUseIgnoredFileNames() const;
+    const std::vector<std::string> &getIngoredFileNames() const;
+
 
     bool getDisplayAllReadedFiles() const;
     bool getDisplayAllIgnoredExtensions() const;
@@ -39,11 +47,19 @@ private:
     std::string m_directoryPath;
     std::string m_outputImagePath;
 
-    bool m_useAcceptedExtension;
+
+    bool m_useAcceptedExtensions;
     std::vector<std::string> m_acceptedExtensions;
 
     bool m_useIgnoredExtensions;
     std::vector<std::string> m_ignoredExtensions;
+
+    bool m_useAcceptedFileNames;
+    std::vector<std::string> m_acceptedFileNames;
+
+    bool m_useIgnoredFileNames;
+    std::vector<std::string> m_ignoredFileNames;
+
 
     bool m_displayAllReadedFiles;
     bool m_displayAllIgnoredExtensions;
