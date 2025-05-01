@@ -37,6 +37,12 @@ public:
     bool getUseIgnoredFileNames() const;
     const std::vector<std::string> &getIngoredFileNames() const;
 
+    bool getUseAcceptedDirectories() const;
+    const std::vector<std::string> &getAcceptedDirectories() const;
+
+    bool getUseIgnoredDirectories() const;
+    const std::vector<std::string> &getIngoredDirectories() const;
+
 
     bool getDisplayAllReadedFiles() const;
     bool getDisplayAllIgnoredExtensions() const;
@@ -59,6 +65,12 @@ private:
 
     bool m_useIgnoredFileNames;
     std::vector<std::string> m_ignoredFileNames;
+
+    bool m_useAcceptedDirectories;
+    std::vector<std::string> m_acceptedDirectories;
+
+    bool m_useIgnoredDirectories;
+    std::vector<std::string> m_ignoredDirectories;
 
 
     bool m_displayAllReadedFiles;

@@ -37,14 +37,14 @@ void Program::readDirectory()
     std::map<std::string, int> skipped;
     std::vector<fs::path> accepted;
 
-    readDirectoryRecursive(m_directoryPath, skipped, accepted);
+    this->readDirectoryRecursive(m_directoryPath, skipped, accepted);
 
     if(m_startupJson->getDisplayAllIgnoredExtensions())
     {
-        R("Skipped extensions:\n");
-        for(const auto &[skippedExtension, count] : skipped)
+        R("Skipped files:\n");
+        for(const auto &[skipped, count] : skipped)
         {
-            R("\"%s\" - %d\n", skippedExtension.c_str(), count);
+            R("\"%s\" - %d\n", skipped.c_str(), count);
         }
     }
 
@@ -69,7 +69,7 @@ void Program::readDirectoryRecursive(
     {
         if(file.is_directory())
         {
-            innerDirectories.push_back(file.path());
+            this->processDirectoryFromDirectory(file.path(), skipped, innerDirectories);
             continue;
         }
         if(!file.is_regular_file())
@@ -128,6 +128,33 @@ void Program::processFileFromDirectory(
             skipped[skippedData] = 1;
         }
     }
+}
+
+void Program::processDirectoryFromDirectory(
+    const fs::path &directory,
+    std::map<std::string, int> &skipped,
+    std::vector<fs::path> &innerDirectories)
+{
+    if(this->hasAcceptedDirectory(directory) && this->notHasIgnoredDirectory(directory))
+    {
+        innerDirectories.push_back(directory);
+    }
+    else
+    {
+        std::string skippedData = directory.lexically_relative(m_directoryPath)
+                                      .string() + "/";
+
+        /// add to skipped data list
+        if(auto search = skipped.find(skippedData); search != skipped.end())
+        {
+            search->second++;
+        }
+        else
+        {
+            skipped[skippedData] = 1;
+        }
+    }
+
 }
 
 void Program::findRelationsBetweenFiles()
@@ -247,6 +274,9 @@ void Program::startGraphviz()
     fs::remove(graphSourceFile);
 }
 
+
+
+
 bool Program::hasAcceptedExtension(const std::filesystem::__cxx11::path &path) const
 {
     static bool useAcceptedExtensions = m_startupJson->getUseAcceptedExtensions();
@@ -258,7 +288,7 @@ bool Program::hasAcceptedExtension(const std::filesystem::__cxx11::path &path) c
 
     for(const std::string &acceptedExtension : acceptedExtensions)
     {
-        if(acceptedExtensions.empty())
+        if(acceptedExtension.empty())
             continue;
 
         if(acceptedExtension[0] == '.')
@@ -280,7 +310,6 @@ bool Program::notHasIgnoredExtension(const std::filesystem::__cxx11::path &path)
     static bool useIgnoredExtensions = m_startupJson->getUseIgnoredExtensions();
     if(!useIgnoredExtensions)
         return true;
-
 
     static const auto &ignoredExtensions = m_startupJson->getIngoredExtensions();
     const std::string &extension = path.extension().string();
@@ -315,7 +344,7 @@ bool Program::hasAcceptedFileName(const std::filesystem::__cxx11::path &path) co
 
     for(const std::string &acceptedFileName : acceptedFileNames)
     {
-        if(acceptedFileNames.empty())
+        if(acceptedFileName.empty())
             continue;
 
         if(fileName == acceptedFileName)
@@ -330,7 +359,6 @@ bool Program::notHasIgnoredFileName(const std::filesystem::__cxx11::path &path) 
     if(!useIgnoredFileNames)
         return true;
 
-
     static const auto &ignoredFileNames = m_startupJson->getIngoredFileNames();
     const std::string &fileName = path.filename().string();
 
@@ -341,6 +369,74 @@ bool Program::notHasIgnoredFileName(const std::filesystem::__cxx11::path &path) 
 
         if(fileName == ignoredFileName)
             return false;
+    }
+    return true;
+}
+
+bool Program::hasAcceptedDirectory(const std::filesystem::__cxx11::path &path) const
+{
+    static bool useAcceptedDirectories = m_startupJson->getUseAcceptedDirectories();
+    if(!useAcceptedDirectories)
+        return true;
+
+    static const auto &acceptedDirectories = m_startupJson->getAcceptedDirectories();
+    const std::string &directory = path.lexically_relative(m_directoryPath).string();
+
+    for(const std::string &acceptedDirectory : acceptedDirectories)
+    {
+        if(acceptedDirectory.empty())
+            continue;
+
+        char last = acceptedDirectory[acceptedDirectory.size()-1];
+        if(last == '/')
+        {
+            if((directory + "/") == acceptedDirectory)
+                return true;
+        }
+        else if(last == '\\')
+        {
+            if((directory + "\\") == acceptedDirectory)
+                return true;
+        }
+        else
+        {
+            if(directory == acceptedDirectory)
+                return true;
+        }
+    }
+    return false;
+}
+
+bool Program::notHasIgnoredDirectory(const std::filesystem::__cxx11::path &path) const
+{
+    static bool useIgnoredDirectories = m_startupJson->getUseIgnoredDirectories();
+    if(!useIgnoredDirectories)
+        return true;
+
+    static const auto &ignoredDirectories = m_startupJson->getIngoredDirectories();
+    const std::string &directory = path.filename().string();
+
+    for(const std::string &ignoredDirectory : ignoredDirectories)
+    {
+        if(ignoredDirectory.empty())
+            continue;
+
+        char last = ignoredDirectory[ignoredDirectory.size()-1];
+        if(last == '/')
+        {
+            if((directory + "/") == ignoredDirectory)
+                return false;
+        }
+        else if(last == '\\')
+        {
+            if((directory + "\\") == ignoredDirectory)
+                return false;
+        }
+        else
+        {
+            if(directory == ignoredDirectory)
+                return false;
+        }
     }
     return true;
 }

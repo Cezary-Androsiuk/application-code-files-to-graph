@@ -15,11 +15,19 @@
 
     "use accepted file names": false,
     "accepted file names": [
-
     ],
     "use ignored file names": true,
     "ignored file names": [
         "Backend.h"
+    ],
+
+    "use accepted directories": false,
+    "accepted directories": [
+        "cpp"
+    ],
+    "use ignored directories": true,
+    "ignored directories": [
+        "support"
     ],
 
     "display all readed files": true,

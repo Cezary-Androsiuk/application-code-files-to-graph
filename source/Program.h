@@ -32,6 +32,10 @@ private:
         const fs::path &file,
         std::map<std::string, int> &skipped,
         std::vector<fs::path> &accepted);
+    void processDirectoryFromDirectory(
+        const fs::path &directory,
+        std::map<std::string, int> &skipped,
+        std::vector<fs::path> &innerDirectories);
     void findRelationsBetweenFiles();
     void createStructureForGraph();
     void startGraphviz();
@@ -41,6 +45,9 @@ private:
 
     bool hasAcceptedFileName(const fs::path &path) const;
     bool notHasIgnoredFileName(const fs::path &path) const;
+
+    bool hasAcceptedDirectory(const fs::path &path) const;
+    bool notHasIgnoredDirectory(const fs::path &path) const;
 
 private:
     const ReadStartupJson *const m_startupJson;
