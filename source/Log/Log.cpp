@@ -22,6 +22,7 @@ const char *Log::logTypeToStr(Type type)
     case Log::Type::Warning:    return "Log::Type::Warning";
     case Log::Type::Error:      return "Log::Type::Error";
     case Log::Type::Debug:      return "Log::Type::Debug";
+    case Log::Type::Raw:        return "Log::Type::Raw";
     }
 
     fprintf(stderr, "unknown Log::Type: %d\n", static_cast<int>(type));
@@ -67,6 +68,11 @@ void Log::error(cstr func, cstr log, Log::Action action)
 void Log::debug(cstr func, cstr log, Log::Action action)
 {
     Log::safeLog(Type::Debug, func, log, action);
+}
+
+void Log::raw(cstr func, cstr log, Action action)
+{
+    Log::safeLog(Type::Raw, func, log, action);
 }
 
 std::string Log::asprintf(const char *text, ...)
@@ -135,6 +141,7 @@ std::string Log::buildPrefix(Log::Type logType, cstr funName)
     case Log::Type::Warning:    prefix += "W ###";      break;
     case Log::Type::Error:      prefix += "E ### ###";  break;
     case Log::Type::Debug:      prefix += "D ";         break;
+    case Log::Type::Raw:        prefix += "R ";         break;
     default:
         fprintf(stderr, "unknown type %s, using: '?'\n", Log::logTypeToStr(logType));
         fflush(stderr);
@@ -185,17 +192,45 @@ void Log::log(Log::Type logType, cstr funName, cstr log, Log::Action action)
     const std::string time = "[" + Log::time() +  "]" + " ";
     const std::string prefix = buildPrefix(logType, funName);
 
-    if(limitedAction & Action::Print)
-        Log::print(prefix + log);
+    bool isRaw = logType == Log::Type::Raw;
+    if(isRaw)
+    {
+        if(limitedAction & Action::Print)
+            Log::print(log, false);
+    }
+    else
+    {
+        if(limitedAction & Action::Print)
+            Log::print(prefix + log, true);
+    }
 
-    if(limitedAction & Action::Save)
-        Log::saveFile(time + prefix + log);
+    if(isRaw)
+    {
+        if(limitedAction & Action::Save)
+            Log::saveFile(time + prefix + "\n""<<START RAW>>""\n" + log + "\n""<<END RAW>>");
+    }
+    else
+    {
+        if(limitedAction & Action::Save)
+            Log::saveFile(time + prefix + log);
+    }
 
     try{
-        if(limitedAction & Action::Session)
+        if(isRaw)
         {
-            Log::addSession(prefix + log);
-            // Log::addSession(logType, funName, log);
+            if(limitedAction & Action::Session)
+            {
+                Log::addSession(log, false);
+                // Log::addSession(logType, funName, log);
+            }
+        }
+        else
+        {
+            if(limitedAction & Action::Session)
+            {
+                Log::addSession(prefix + log, true);
+                // Log::addSession(logType, funName, log);
+            }
         }
     }
     catch (...) {
@@ -217,9 +252,9 @@ void Log::safeLog(Log::Type logType, cstr funName, cstr log, Action action)
     }
 }
 
-void Log::print(cstr content)
+void Log::print(cstr content, bool newLine)
 {
-    fprintf(stdout, "%s\n", content.c_str());
+    fprintf(stdout, "%s%s", content.c_str(), newLine ? "\n" : "");
     fflush(stdout);
 }
 
@@ -229,9 +264,9 @@ void Log::saveFile(cstr content)
     {
         if(!std::filesystem::exists(outputDirectory))
         {
-            if(std::filesystem::create_directory(outputDirectory))
+            if(!std::filesystem::create_directory(outputDirectory))
             {
-                fprintf(stderr, "cannot create '%s' output directory\n");
+                fprintf(stderr, "cannot create '%s' output directory\n", outputDirectory);
                 fflush(stderr);
                 return;
             }
@@ -254,9 +289,9 @@ void Log::saveFile(cstr content)
     // outFile.flush();
 }
 
-void Log::addSession(cstr content)
+void Log::addSession(cstr content, bool newLine)
 {
-    Log::currentSession += content + "\n";
+    Log::currentSession += content + (newLine ? "\n" : "");
 }
 
 // void Log::addSession(Log::Type logType, const QString &funName, const QString &message)

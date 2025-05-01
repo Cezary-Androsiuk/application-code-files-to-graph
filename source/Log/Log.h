@@ -18,7 +18,7 @@
 
 /// Display Object Life Time Variable - Force
 #define DOLTV_F(ptr, argsStr) {                                             \
-std::string f_name(__FUNCTION__);                                       \
+    std::string f_name(__FUNCTION__);                                       \
     if(f_name.empty())      f_name = "unknown action";                      \
     if(f_name[0] == '~')    f_name = "Destroying " + f_name;                \
     else                    f_name = "Creating " + f_name;                  \
@@ -39,15 +39,17 @@ std::string f_name(__FUNCTION__);                                       \
 
 
 
-#define I(...) Log::info    (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__))
-#define W(...) Log::warning (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__))
-#define E(...) Log::error   (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__))
-#define D(...) Log::debug   (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__))
+#define I(...) Log::info    (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__)) // info
+#define W(...) Log::warning (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__)) // warning
+#define E(...) Log::error   (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__)) // error
+#define D(...) Log::debug   (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__)) // debug
+#define R(...) Log::raw     (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__)) // raw
 
-#define IA(a, ...) Log::info    (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__), Log::Action(a));
-#define WA(a, ...) Log::warning (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__), Log::Action(a));
-#define EA(a, ...) Log::error   (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__), Log::Action(a));
-#define DA(a, ...) Log::debug   (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__), Log::Action(a));
+#define IA(a, ...) Log::info    (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__), Log::Action(a)); // info
+#define WA(a, ...) Log::warning (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__), Log::Action(a)); // warning
+#define EA(a, ...) Log::error   (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__), Log::Action(a)); // error
+#define DA(a, ...) Log::debug   (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__), Log::Action(a)); // debug
+#define RA(a, ...) Log::raw     (__PRETTY_FUNCTION__, SAPF(__VA_ARGS__), Log::Action(a)); // raw
 
 
 
@@ -67,6 +69,7 @@ public:
         Warning,
         Error,
         Debug,
+        Raw,
     };
     static const char *logTypeToStr(Type type);
 
@@ -91,6 +94,7 @@ public:
     static void warning(cstr func, cstr log, Action action = Action(Action::All));
     static void error(cstr func, cstr log, Action action = Action(Action::All));
     static void debug(cstr func, cstr log, Action action = Action(Action::All));
+    static void raw(cstr func, cstr log, Action action = Action(Action::All));
 
     static std::string asprintf(const char *text, ...);
     static std::string asprintf(cstr text, ...);
@@ -102,9 +106,9 @@ private:
 
     static void log(Type logType, cstr funName, cstr log, Action action = Action::All);
     static void safeLog(Type logType, cstr funName, cstr log, Action action = Action::All);
-    static void print(cstr content);
+    static void print(cstr content, bool newLine = true);
     static void saveFile(cstr content);
-    static void addSession(cstr content);
+    static void addSession(cstr content, bool newLine = true);
     // static void addSession(Type logType, cstr funName, cstr message);
 
 public:
