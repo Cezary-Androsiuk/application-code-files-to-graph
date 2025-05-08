@@ -1,16 +1,18 @@
 {
-    "directory path": "D:/QtCreator/0_projects/PetanqueTeam/graph",
-    "output image path": "D:/QtCreator/0_projects/PetanqueTeam/graph/PetanqueTeam.png",
+    "directory path": "C:/Users/cezar/Documents/QtCreator/0_projects/PetanqueTeam/graph",
+    "output image path": "C:/Users/cezar/Documents/QtCreator/0_projects/PetanqueTeam/graph/PetanqueTeamQML.png",
 
     "use accepted extesions": true,
     "accepted extesions": [
+        ".qml"
+    ],
+    "accepted extesions 1": [
         ".cpp",
         ".hpp",
         ".h"
     ],
     "use ignored extesions": true,
     "ignored extesions": [
-        ".cpp"
     ],
 
     "use accepted file names": false,
@@ -18,16 +20,13 @@
     ],
     "use ignored file names": true,
     "ignored file names": [
-        "Backend.h"
     ],
 
     "use accepted directories": false,
     "accepted directories": [
-        "cpp"
     ],
     "use ignored directories": true,
     "ignored directories": [
-        "support"
     ],
 
     "display all readed files": true,

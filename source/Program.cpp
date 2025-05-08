@@ -167,8 +167,13 @@ void Program::findRelationsBetweenFiles()
                 continue;
 
             std::string fileName = fileWithName->getFileName();
+
+            R("START ####################\n");
+            R("in file: %s\n", fileWithContent->getFileName().c_str());
+            R("phrase: %s\n", fileName.c_str());
             if(fileWithContent->fileContentContains(fileName))
             {
+                R("Found!\n");
                 fileWithContent->addIncludeFile(fileWithName);
             }
         }
@@ -267,7 +272,7 @@ void Program::startGraphviz()
         I("graphviz executed successfully");
     }
 
-    fs::remove(graphSourceFile);
+    // fs::remove(graphSourceFile);
 }
 
 

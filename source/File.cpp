@@ -19,9 +19,11 @@ bool File::fileContentContains(std::string phrase) const
 {
     for(const auto &line : m_fileContent)
     {
+        // R("'%s'\n", line.c_str());
         size_t pos = line.find(phrase);
         if(pos != std::string::npos)
         {
+            // R("found!\n\n");
             return true;
         }
     }
