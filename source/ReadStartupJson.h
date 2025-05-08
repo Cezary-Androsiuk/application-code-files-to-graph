@@ -47,6 +47,8 @@ public:
     bool getDisplayAllReadedFiles() const;
     bool getDisplayAllIgnoredExtensions() const;
 
+    bool getUseQmlImprovement() const;
+
     const std::string getGraphvizDotLocation() const;
 
 private:
@@ -75,6 +77,8 @@ private:
 
     bool m_displayAllReadedFiles;
     bool m_displayAllIgnoredExtensions;
+
+    bool m_useQmlImprovement;
 
     std::string m_graphvizDotLocation;
 

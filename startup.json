@@ -31,5 +31,8 @@
 
     "display all readed files": true,
     "display all ignored extensions": true,
+
+    "use qml improvement": true,
+
     "graphviz dot.exe location" : "./Graphviz/Graphviz-12.2.1-win64/bin/dot.exe"
 }

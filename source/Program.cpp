@@ -166,12 +166,26 @@ void Program::findRelationsBetweenFiles()
             if(fileWithContent.get() == fileWithName.get())
                 continue;
 
-            std::string fileName = fileWithName->getFileName();
+
+            std::vector<std::string> phrases;
+            if(ReadStartupJson::getInstance()->getUseQmlImprovement())
+            {
+                phrases.push_back(fileWithName->getFileName());
+                phrases.push_back(fileWithName->getStem() + "{");
+                phrases.push_back(fileWithName->getStem() + " {");
+            }
+            else
+            {
+                phrases.push_back(fileWithName->getFileName());
+            }
 
             R("START ####################\n");
             R("in file: %s\n", fileWithContent->getFileName().c_str());
-            R("phrase: %s\n", fileName.c_str());
-            if(fileWithContent->fileContentContains(fileName))
+            for(const auto &phrase : phrases)
+                R("phrase: %s\n", phrase.c_str());
+
+
+            if(fileWithContent->fileContentContains(phrases))
             {
                 R("Found!\n");
                 fileWithContent->addIncludeFile(fileWithName);

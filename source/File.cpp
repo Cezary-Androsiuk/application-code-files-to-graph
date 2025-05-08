@@ -15,16 +15,19 @@ File::File(const fs::path &rootDirPath, const fs::path &filePath)
     this->readFileContent();
 }
 
-bool File::fileContentContains(std::string phrase) const
+bool File::fileContentContains(const std::vector<std::string> &phrases) const
 {
     for(const auto &line : m_fileContent)
     {
         // R("'%s'\n", line.c_str());
-        size_t pos = line.find(phrase);
-        if(pos != std::string::npos)
+        for(const auto &phrase : phrases)
         {
-            // R("found!\n\n");
-            return true;
+            size_t pos = line.find(phrase);
+            if(pos != std::string::npos)
+            {
+                R("found '%s'!\n\n", phrase.c_str());
+                return true;
+            }
         }
     }
     return false;
@@ -72,6 +75,11 @@ std::string File::getFilePathRelative() const
 std::string File::getFileName() const
 {
     return m_filePath.filename().string();
+}
+
+std::string File::getStem() const
+{
+    return m_filePath.stem().string();
 }
 
 const std::vector<std::weak_ptr<File> > &File::getIncludedFiles() const

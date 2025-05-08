@@ -15,13 +15,14 @@ class File
 public:
     File(const fs::path &rootDirPath, const fs::path &filePath);
 
-    bool fileContentContains(std::string phrase) const;
+    bool fileContentContains(const std::vector<std::string> &phrases) const;
     void addIncludeFile(const std::shared_ptr<File> &includedFile);
     void print() const;
 
     const fs::path &getFilePath() const;
     std::string getFilePathRelative() const;
     std::string getFileName() const;
+    std::string getStem() const;
     const std::vector<std::weak_ptr<File>> &getIncludedFiles() const;
 
 private:

@@ -34,6 +34,8 @@ void ReadStartupJson::readVariables(const json &jvalue)
     m_displayAllReadedFiles = readRawValue(jvalue , "display all readed files").get<bool>();
     m_displayAllIgnoredExtensions = readRawValue(jvalue, "display all ignored extensions").get<bool>();
 
+    m_useQmlImprovement = readRawValue(jvalue, "use qml improvement").get<bool>();
+
     m_graphvizDotLocation = readRawValue(jvalue, "graphviz dot.exe location").get<std::string>();
 
     I("all keys readed correctly");
@@ -181,6 +183,11 @@ bool ReadStartupJson::getDisplayAllReadedFiles() const
 bool ReadStartupJson::getDisplayAllIgnoredExtensions() const
 {
     return m_displayAllIgnoredExtensions;
+}
+
+bool ReadStartupJson::getUseQmlImprovement() const
+{
+    return m_useQmlImprovement;
 }
 
 const std::string ReadStartupJson::getGraphvizDotLocation() const
