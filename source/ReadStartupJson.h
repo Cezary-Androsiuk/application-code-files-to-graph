@@ -48,6 +48,7 @@ public:
     bool getDisplayAllIgnoredExtensions() const;
 
     bool getUseQmlImprovement() const;
+    bool getUseCppImprovement() const;
 
     const std::string getGraphvizDotLocation() const;
 
@@ -79,6 +80,7 @@ private:
     bool m_displayAllIgnoredExtensions;
 
     bool m_useQmlImprovement;
+    bool m_useCppImprovement;
 
     std::string m_graphvizDotLocation;
 

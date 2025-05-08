@@ -25,7 +25,7 @@ bool File::fileContentContains(const std::vector<std::string> &phrases) const
             size_t pos = line.find(phrase);
             if(pos != std::string::npos)
             {
-                R("found '%s'!\n\n", phrase.c_str());
+                // R("found '%s'!\n\n", phrase.c_str());
                 return true;
             }
         }

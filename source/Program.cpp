@@ -171,23 +171,30 @@ void Program::findRelationsBetweenFiles()
             if(ReadStartupJson::getInstance()->getUseQmlImprovement())
             {
                 phrases.push_back(fileWithName->getFileName());
-                phrases.push_back(fileWithName->getStem() + "{");
-                phrases.push_back(fileWithName->getStem() + " {");
+                auto stem = fileWithName->getStem();
+                phrases.push_back(stem + "{");
+                phrases.push_back(stem + " {");
+            }
+            else if(ReadStartupJson::getInstance()->getUseCppImprovement())
+            {
+                auto filename = fileWithName->getFileName();
+                phrases.push_back("\"" + filename + "\"");
+                phrases.push_back("\\" + filename + "\"");
+                phrases.push_back("/" + filename + "\"");
             }
             else
             {
                 phrases.push_back(fileWithName->getFileName());
             }
 
-            R("START ####################\n");
-            R("in file: %s\n", fileWithContent->getFileName().c_str());
-            for(const auto &phrase : phrases)
-                R("phrase: %s\n", phrase.c_str());
-
+            // R("START ####################\n");
+            // R("in file: %s\n", fileWithContent->getFileName().c_str());
+            // for(const auto &phrase : phrases)
+            //     R("phrase: %s\n", phrase.c_str());
 
             if(fileWithContent->fileContentContains(phrases))
             {
-                R("Found!\n");
+                // R("Found!\n");
                 fileWithContent->addIncludeFile(fileWithName);
             }
         }

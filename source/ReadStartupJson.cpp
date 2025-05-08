@@ -35,6 +35,7 @@ void ReadStartupJson::readVariables(const json &jvalue)
     m_displayAllIgnoredExtensions = readRawValue(jvalue, "display all ignored extensions").get<bool>();
 
     m_useQmlImprovement = readRawValue(jvalue, "use qml improvement").get<bool>();
+    m_useCppImprovement = readRawValue(jvalue, "use cpp improvement").get<bool>();
 
     m_graphvizDotLocation = readRawValue(jvalue, "graphviz dot.exe location").get<std::string>();
 
@@ -188,6 +189,11 @@ bool ReadStartupJson::getDisplayAllIgnoredExtensions() const
 bool ReadStartupJson::getUseQmlImprovement() const
 {
     return m_useQmlImprovement;
+}
+
+bool ReadStartupJson::getUseCppImprovement() const
+{
+    return m_useCppImprovement;
 }
 
 const std::string ReadStartupJson::getGraphvizDotLocation() const
