@@ -178,9 +178,14 @@ void Program::findRelationsBetweenFiles()
             else if(ReadStartupJson::getInstance()->getUseCppImprovement())
             {
                 auto filename = fileWithName->getFileName();
+
                 phrases.push_back("\"" + filename + "\"");
                 phrases.push_back("\\" + filename + "\"");
                 phrases.push_back("/" + filename + "\"");
+
+                phrases.push_back("<" + filename + ">");
+                phrases.push_back("\\" + filename + ">");
+                phrases.push_back("/" + filename + ">");
             }
             else
             {
