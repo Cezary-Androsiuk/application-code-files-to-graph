@@ -8,7 +8,7 @@ Created using C++, [JSON](https://github.com/Cezary-Androsiuk/petanque-team) fro
 
 
 ## Usage
-Install [Graphviz](https://gitlab.com/graphviz/graphviz) in a directory of your choice. Add the installation directory path to ```startup.json```. [...]
+[...]
 
 
 ## Images
