@@ -2,6 +2,8 @@
 
 ## About
 Generates a graphical representation of the relationship between files in the form of a graph.
+The graphs that this application creates are visible in the [Graphs](#Graphs) section
+
 
 ## Installation
 ...
