@@ -2,11 +2,14 @@
 
 ## About
 Generates a graphical representation of the relationship between files in the form of a graph.
-The graphs that this application creates are visible in the [Graphs](#Graphs) section
+The graphs that this application creates are visible in the [Graphs](#Graphs) section.
+
+Created using C++, [JSON from nlohmann](https://github.com/Cezary-Androsiuk/petanque-team) [Log (no repository yet)]() and [Graphviz](https://gitlab.com/graphviz/graphviz).
 
 
-## Installation
-...
+## Usage
+Install [Graphviz](https://gitlab.com/graphviz/graphviz) in a directory of your choice. Add the installation directory path to ```startup.json```. [...]
+
 
 ## Images
 
