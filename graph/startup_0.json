@@ -1,6 +1,6 @@
 {
     "directory path": "D:/QtCreator/0_small_projects/ApplicationCodeFilesToGraph/source",
-    "output image path": "D:/QtCreator/0_small_projects/ApplicationCodeFilesToGraph/source/ApplicationCodeFilesToGraph_1.png",
+    "output image path": "D:/QtCreator/0_small_projects/ApplicationCodeFilesToGraph/source/ApplicationCodeFilesToGraph_0.png",
 
     "use accepted extesions": true,
     "accepted extesions": [
@@ -24,7 +24,6 @@
     ],
     "use ignored directories": true,
     "ignored directories": [
-        "Log"
     ],
 
     "display all readed files": true,
