@@ -14,5 +14,5 @@ The graphs that this application creates are visible in the [Graphs](#Graphs) se
 #### CPP Relations
 ![graph - CPP relations](https://github.com/Cezary-Androsiuk/application-code-files-to-graph/blob/master/graphs/ApplicationCodeFilesToGraph_0.png)
 
-#### CPP relations - no singletons
+#### CPP relations - no singletons (Log.*)
 ![graph - CPP relations - no singletons](https://github.com/Cezary-Androsiuk/application-code-files-to-graph/blob/master/graphs/ApplicationCodeFilesToGraph_1.png)
