@@ -1,5 +1,6 @@
 #include "Program.h"
 
+const char *version = "1.1.0";
 const char *graphSourceFile = "./graph_source.dot";
 
 Program::Program()
@@ -298,7 +299,7 @@ void Program::startGraphviz()
         I("graphviz executed successfully");
     }
 
-    // fs::remove(graphSourceFile);
+    fs::remove(graphSourceFile);
 }
 
 

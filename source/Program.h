@@ -13,6 +13,7 @@
 
 namespace fs = std::filesystem;
 
+extern const char *version;
 extern const char *graphSourceFile;
 
 class Program
