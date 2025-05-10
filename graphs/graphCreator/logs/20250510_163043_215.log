@@ -1,0 +1,201 @@
+[2025-05-10 16:30:43.215]---------------------------------------- [APPLICATION STARTED] ----------------------------------------
+[2025-05-10 16:30:43.211] R                                                int main(int, char**)            
+<<START RAW>>
+Starting Application Code Files to Graph, version: 1.2.1
+
+<<END RAW>>
+[2025-05-10 16:30:43.215] I                        ReadStartupJson::ReadStartupJson(const char*)            using json file 'startup_1.json' selected by user
+[2025-05-10 16:30:43.223] I                     void ReadStartupJson::readVariables(const json&)            all keys readed correctly
+[2025-05-10 16:30:43.229] I                        ReadStartupJson::ReadStartupJson(const char*)            startup json loaded
+[2025-05-10 16:30:43.387] R                                        void Program::readDirectory()            
+<<START RAW>>
+Skipped files:
+
+<<END RAW>>
+[2025-05-10 16:30:43.389] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*" - 284
+
+<<END RAW>>
+[2025-05-10 16:30:43.390] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.bat" - 1
+
+<<END RAW>>
+[2025-05-10 16:30:43.390] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.bin" - 3
+
+<<END RAW>>
+[2025-05-10 16:30:43.391] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.check_cache" - 2
+
+<<END RAW>>
+[2025-05-10 16:30:43.392] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.cmake" - 19
+
+<<END RAW>>
+[2025-05-10 16:30:43.393] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.conan" - 2
+
+<<END RAW>>
+[2025-05-10 16:30:43.393] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.dll" - 310
+
+<<END RAW>>
+[2025-05-10 16:30:43.394] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.dot" - 6
+
+<<END RAW>>
+[2025-05-10 16:30:43.395] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.exe" - 187
+
+<<END RAW>>
+[2025-05-10 16:30:43.396] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.idx" - 825
+
+<<END RAW>>
+[2025-05-10 16:30:43.396] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.json" - 39
+
+<<END RAW>>
+[2025-05-10 16:30:43.397] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.log" - 98
+
+<<END RAW>>
+[2025-05-10 16:30:43.398] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.md" - 1
+
+<<END RAW>>
+[2025-05-10 16:30:43.398] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.ninja" - 4
+
+<<END RAW>>
+[2025-05-10 16:30:43.399] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.obj" - 8
+
+<<END RAW>>
+[2025-05-10 16:30:43.400] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.png" - 7
+
+<<END RAW>>
+[2025-05-10 16:30:43.400] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.prev" - 2
+
+<<END RAW>>
+[2025-05-10 16:30:43.401] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.sample" - 14
+
+<<END RAW>>
+[2025-05-10 16:30:43.402] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.sh" - 5
+
+<<END RAW>>
+[2025-05-10 16:30:43.402] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.txt" - 5
+
+<<END RAW>>
+[2025-05-10 16:30:43.403] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.user" - 1
+
+<<END RAW>>
+[2025-05-10 16:30:43.404] R                                        void Program::readDirectory()            
+<<START RAW>>
+"*.yaml" - 2
+
+<<END RAW>>
+[2025-05-10 16:30:43.405] R                                        void Program::readDirectory()            
+<<START RAW>>
+"build\Desktop_Qt_6_7_3_MinGW_64_bit-Debug\CMakeFiles\ApplicationCodeFilesToGraph.dir\source\Log/" - 1
+
+<<END RAW>>
+[2025-05-10 16:30:43.410] R                                        void Program::readDirectory()            
+<<START RAW>>
+"build\Desktop_Qt_6_7_3_MinGW_64_bit-Release\CMakeFiles\ApplicationCodeFilesToGraph.dir\source\Log/" - 1
+
+<<END RAW>>
+[2025-05-10 16:30:43.416] R                                        void Program::readDirectory()            
+<<START RAW>>
+"source\Log/" - 1
+
+<<END RAW>>
+[2025-05-10 16:30:43.417] R                                        void Program::readDirectory()            
+<<START RAW>>
+Accepted files:
+
+<<END RAW>>
+[2025-05-10 16:30:43.417] R                                        void Program::readDirectory()            
+<<START RAW>>
+build\Desktop_Qt_6_7_3_MinGW_64_bit-Debug\CMakeFiles\3.29.3\CompilerIdCXX\CMakeCXXCompilerId.cpp
+
+<<END RAW>>
+[2025-05-10 16:30:43.423] R                                        void Program::readDirectory()            
+<<START RAW>>
+build\Desktop_Qt_6_7_3_MinGW_64_bit-Debug\CMakeFiles\3.30.5\CompilerIdCXX\CMakeCXXCompilerId.cpp
+
+<<END RAW>>
+[2025-05-10 16:30:43.429] R                                        void Program::readDirectory()            
+<<START RAW>>
+build\Desktop_Qt_6_7_3_MinGW_64_bit-Release\CMakeFiles\3.30.5\CompilerIdCXX\CMakeCXXCompilerId.cpp
+
+<<END RAW>>
+[2025-05-10 16:30:43.434] R                                        void Program::readDirectory()            
+<<START RAW>>
+source\File.cpp
+
+<<END RAW>>
+[2025-05-10 16:30:43.435] R                                        void Program::readDirectory()            
+<<START RAW>>
+source\File.h
+
+<<END RAW>>
+[2025-05-10 16:30:43.436] R                                        void Program::readDirectory()            
+<<START RAW>>
+source\main.cpp
+
+<<END RAW>>
+[2025-05-10 16:30:43.437] R                                        void Program::readDirectory()            
+<<START RAW>>
+source\Program.cpp
+
+<<END RAW>>
+[2025-05-10 16:30:43.438] R                                        void Program::readDirectory()            
+<<START RAW>>
+source\Program.h
+
+<<END RAW>>
+[2025-05-10 16:30:43.439] R                                        void Program::readDirectory()            
+<<START RAW>>
+source\ReadStartupJson.cpp
+
+<<END RAW>>
+[2025-05-10 16:30:43.440] R                                        void Program::readDirectory()            
+<<START RAW>>
+source\ReadStartupJson.h
+
+<<END RAW>>
+[2025-05-10 16:30:43.442] R                                        void Program::readDirectory()            
+<<START RAW>>
+source\nlohmann_json\json.hpp
+
+<<END RAW>>
+[2025-05-10 16:30:43.474] I                            void Program::findRelationsBetweenFiles()            created relations between files
+[2025-05-10 16:30:43.948] I                                        void Program::startGraphviz()            graphviz executed successfully
