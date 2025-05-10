@@ -1,6 +1,6 @@
 #include "Program.h"
 
-const char *version = "1.2.0";
+const char *version = "1.2.1";
 const char *graphSourceFile = "./graph_source.dot";
 
 Program::Program(int argc, char **argv)
@@ -12,7 +12,11 @@ void Program::run()
 {
     m_directoryPath = m_startupJson->getDirectoryPath();
 
-    this->readDirectory();
+    try {
+        this->readDirectory();
+    } catch (const std::exception &e) {
+        E("reading directory failed! Reason: %s", e.what());
+    }
 
     this->findRelationsBetweenFiles();
 
@@ -32,6 +36,12 @@ void Program::readDirectory()
 {
     std::map<std::string, int> skipped;
     std::vector<fs::path> accepted;
+
+    if(!fs::exists(m_directoryPath))
+    {
+        E("given directory '%s' doesn't exist", m_directoryPath.string().c_str());
+        exit(1);
+    }
 
     this->readDirectoryRecursive(m_directoryPath, skipped, accepted);
 

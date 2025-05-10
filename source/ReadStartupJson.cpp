@@ -46,9 +46,10 @@ void ReadStartupJson::readVariables(const json &jvalue)
 ReadStartupJson::ReadStartupJson(const char *userJsonFile)
     : m_jsonFile{startupJsonFile}
 {
+    std::error_code ec;
     if(userJsonFile != nullptr)
     {
-        if(std::filesystem::exists(userJsonFile))
+        if(std::filesystem::exists(userJsonFile, ec))
         {
             I("using json file '%s' selected by user", userJsonFile);
             m_jsonFile = userJsonFile;
@@ -60,7 +61,7 @@ ReadStartupJson::ReadStartupJson(const char *userJsonFile)
         }
     }
 
-    if(!std::filesystem::exists(m_jsonFile))
+    if(!std::filesystem::exists(m_jsonFile, ec))
     {
         E("json file '%s', doesn't exist", m_jsonFile.c_str());
         exit(1);

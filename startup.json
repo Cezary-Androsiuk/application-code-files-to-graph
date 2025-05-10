@@ -1,6 +1,6 @@
 {
-    "directory path": "D:/QtCreator/0_small_projects/ApplicationCodeFilesToGraph/source",
-    "output image path": "D:/QtCreator/0_small_projects/ApplicationCodeFilesToGraph/source/ApplicationCodeFilesToGraph_1.png",
+    "directory path": "application_source_location",
+    "output image path": "graph_image_location.png",
 
     "use accepted extesions": true,
     "accepted extesions": [
