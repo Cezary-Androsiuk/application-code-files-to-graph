@@ -2,8 +2,9 @@
 
 #include "Program.h"
 
-int main(int argc, char **argv){
-    I("started");
+int main(int argc, char **argv)
+{
+    R("Starting Application Code Files to Graph, version: %s\n", version);
 
     Program(argc, argv).run();
 
