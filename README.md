@@ -4,7 +4,7 @@
 Generates a graphical representation of the relationship between files in the form of a graph.
 The graphs that this application creates are visible in the [Graphs](#Graphs) section.
 
-Created using C++, [JSON](https://github.com/Cezary-Androsiuk/petanque-team) from nlohmann, [Log]() (no repository yet) and [Graphviz](https://gitlab.com/graphviz/graphviz).
+Created using C++, [JSON](https://github.com/Cezary-Androsiuk/petanque-team) from nlohmann, [Log](https://github.com/Cezary-Androsiuk/) (no repository yet) and [Graphviz](https://gitlab.com/graphviz/graphviz).
 
 
 ## Usage
