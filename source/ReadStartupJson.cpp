@@ -3,6 +3,7 @@
 #include "Log/Log.h"
 
 #include <fstream>
+#include <filesystem>
 
 const char *startupJsonFile = "./startup.json";
 
@@ -42,13 +43,33 @@ void ReadStartupJson::readVariables(const json &jvalue)
     I("all keys readed correctly");
 }
 
-ReadStartupJson::ReadStartupJson()
+ReadStartupJson::ReadStartupJson(const char *userJsonFile)
+    : m_jsonFile{startupJsonFile}
 {
+    if(userJsonFile != nullptr)
+    {
+        if(std::filesystem::exists(userJsonFile))
+        {
+            I("using json file '%s' selected by user", userJsonFile);
+            m_jsonFile = userJsonFile;
+        }
+        else
+        {
+            W("selected by user path to json '%s' doesn't exist", userJsonFile);
+            I("trying '%s' path", m_jsonFile.c_str());
+        }
+    }
 
-    std::ifstream iFile(startupJsonFile);
+    if(!std::filesystem::exists(m_jsonFile))
+    {
+        E("json file '%s', doesn't exist", m_jsonFile.c_str());
+        exit(1);
+    }
+
+    std::ifstream iFile(m_jsonFile);
     if(!iFile.good())
     {
-        E("can't open 'startup json' file: %s", startupJsonFile);
+        E("can't open 'startup json' file: %s", m_jsonFile.c_str());
         exit(1);
     }
 
@@ -60,7 +81,7 @@ ReadStartupJson::ReadStartupJson()
     catch(const std::exception &e)
     {
         E("parsing 'startup json' failed");
-        E("file: %s", startupJsonFile);
+        E("file: %s", m_jsonFile.c_str());
         E("reason: %s", e.what());
         exit(1);
     }
@@ -92,9 +113,9 @@ json::value_type ReadStartupJson::readRawValue(const json &jvalue, const char *n
     return value;
 }
 
-ReadStartupJson *ReadStartupJson::getInstance()
+ReadStartupJson *ReadStartupJson::getInstance(const char *userJsonFile)
 {
-    static ReadStartupJson rsj;
+    static ReadStartupJson rsj(userJsonFile);
     return &rsj;
 }
 

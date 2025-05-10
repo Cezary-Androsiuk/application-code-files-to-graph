@@ -14,12 +14,12 @@ class ReadStartupJson
 {
     void readVariables(const json &jvalue);
 
-    ReadStartupJson();
+    ReadStartupJson(const char *userJsonFile);
 
     json::value_type readRawValue(const json &jvalue, const char *name);
 
 public:
-    static ReadStartupJson *getInstance();
+    static ReadStartupJson *getInstance(const char *userJsonFile = nullptr);
 
     const std::string &getDirectoryPath() const;
     const std::string &getOutputImagePath() const;
@@ -53,6 +53,8 @@ public:
     const std::string getGraphvizDotLocation() const;
 
 private:
+    std::string m_jsonFile;
+
     std::string m_directoryPath;
     std::string m_outputImagePath;
 

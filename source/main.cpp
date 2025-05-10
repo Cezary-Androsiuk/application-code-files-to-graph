@@ -2,10 +2,10 @@
 
 #include "Program.h"
 
-int main(){
+int main(int argc, char **argv){
     I("started");
 
-    Program().run();
+    Program(argc, argv).run();
 
     return 0;
 }

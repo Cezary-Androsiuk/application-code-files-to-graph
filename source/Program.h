@@ -19,7 +19,7 @@ extern const char *graphSourceFile;
 class Program
 {
 public:
-    Program();
+    Program(int argc, char **argv);
 
     void run();
 

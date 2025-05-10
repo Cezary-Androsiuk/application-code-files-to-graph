@@ -3,8 +3,8 @@
 const char *version = "1.1.0";
 const char *graphSourceFile = "./graph_source.dot";
 
-Program::Program()
-    : m_startupJson( ReadStartupJson::getInstance() )
+Program::Program(int argc, char **argv)
+    : m_startupJson( ReadStartupJson::getInstance(argc > 1 ? argv[1] : nullptr) )
 {
 
 }
