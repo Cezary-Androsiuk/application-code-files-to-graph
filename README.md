@@ -8,7 +8,9 @@ Created using C++, [JSON](https://github.com/Cezary-Androsiuk/petanque-team) fro
 
 
 ## Usage
-[...]
+Open the file ```startup.json```, set the ```"directory path"``` to your project directory, and then run ```ApplicationCodeFilesToGraph.exe```. After that, an image will be created in the ```"output image path"``` (by default, in the same directory as the executable).
+
+Optionally, you can adjust the values in the startup file to support other languages or to specify your preferences for which files/directories should be included.
 
 
 ## Images
